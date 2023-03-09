@@ -1,4 +1,12 @@
-.App {
+.page {
   font-family: "Cabinet Grotesk";
   font-weight: 700;
+  line-height: 1.2;
+  font-size: 20px;
+  background-color: #f3f3f3;
+}
+
+.page__content {
+  margin: 0 auto;
+  max-width: 1360px;
 }

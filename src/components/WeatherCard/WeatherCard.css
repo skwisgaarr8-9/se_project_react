@@ -1,0 +1,13 @@
+.weather-card {
+  /* background-image: url(../../images/image05.svg); */
+  min-height: 80px;
+  background-repeat: no-repeat;
+  display: flex;
+  align-items: center;
+}
+
+.weather-card__temperature {
+  font-size: 40px;
+  color: #fff;
+  margin: 0;
+}

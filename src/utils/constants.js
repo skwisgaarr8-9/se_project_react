@@ -1,4 +1,4 @@
-const defaultClothingItems = [
+export const defaultClothingItems = [
   {
     _id: 0,
     name: "Cap",
@@ -36,3 +36,72 @@ const defaultClothingItems = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/wtwr-project/Coat.png?etag=298717ed89d5e40b1954a1831ae0bdd4",
   },
 ];
+
+export const weatherCardImages = [
+  {
+    imageUrl: "../../images/image01.svg",
+    isDay: true,
+    weatherId: "sunny",
+  },
+  {
+    imageUrl: "../../images/image02.svg",
+    isDay: true,
+    weatherId: "cloudy",
+  },
+  {
+    imageUrl: "../../images/image03.svg",
+    isDay: true,
+    weatherId: "rain",
+  },
+  {
+    imageUrl: "../../images/image04.svg",
+    isDay: true,
+    weatherId: "storm",
+  },
+  {
+    imageUrl: "../../images/image05.svg",
+    isDay: true,
+    weatherId: "snow",
+  },
+  {
+    imageUrl: "../../images/image06.svg ",
+    isDay: true,
+    weatherId: "fog",
+  },
+  {
+    imageUrl: "",
+    isDay: false,
+    weatherId: "",
+  },
+  {
+    imageUrl: "",
+    isDay: false,
+    weatherId: "",
+  },
+  {
+    imageUrl: "",
+    isDay: false,
+    weatherId: "",
+  },
+  {
+    imageUrl: "",
+    isDay: false,
+    weatherId: "",
+  },
+  {
+    imageUrl: "",
+    isDay: false,
+    weatherId: "",
+  },
+  {
+    imageUrl: "",
+    isDay: false,
+    weatherId: "",
+  },
+];
+
+export const apiData = {
+  apiKey: "7840975e5d81da2782cb8cf1816993a4",
+  latitude: 35.1333,
+  longitude: 129.05,
+};
