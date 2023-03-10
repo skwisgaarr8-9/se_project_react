@@ -1,0 +1,42 @@
+import React from "react";
+import "./ItemModal.css";
+
+function ItemModal({ card, closeModal, name }) {
+  const handleClickOutsideClose = (evt) => {
+    if (evt.target.classList.contains("modal")) {
+      closeModal();
+    }
+  };
+
+  React.useEffect(() => {
+    const handleEscClose = (evt) => {
+      if (evt.key === "Escape") {
+        closeModal();
+      }
+    };
+    window.addEventListener("keydown", handleEscClose);
+    return () => window.removeEventListener("keydown", handleEscClose);
+  }, [closeModal]);
+
+  return (
+    <div
+      className={`modal modal_type_${name}`}
+      onMouseDown={handleClickOutsideClose}
+    >
+      <div className="modal__container preview-card">
+        <img className="preview-card__image" src={card.link} alt={card.name} />
+        <div className="preview-card__content">
+          <h2 className="preview-card__title">{card.name}</h2>
+          <p className="preview-card__weather">Weather: {card.weather}</p>
+        </div>
+        <button
+          className="preview-card__close-button"
+          type="button"
+          onClick={closeModal}
+        ></button>
+      </div>
+    </div>
+  );
+}
+
+export default ItemModal;

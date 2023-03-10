@@ -3,7 +3,7 @@ import headerAvatar from "../../images/avatar.svg";
 import "./Header.css";
 import "./Navigation.css";
 
-function Header({ weatherData }) {
+function Header({ weatherData, handleAddCardClick }) {
   const currentDate = new Date().toLocaleString("default", {
     month: "long",
     day: "numeric",
@@ -20,7 +20,11 @@ function Header({ weatherData }) {
         <nav className="navigation">
           <ul className="navigation__container">
             <li>
-              <button className="navigation__button" type="button">
+              <button
+                className="navigation__button"
+                type="button"
+                onClick={handleAddCardClick}
+              >
                 + Add clothes
               </button>
             </li>

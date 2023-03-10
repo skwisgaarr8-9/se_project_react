@@ -15,7 +15,7 @@ const parseWeatherData = (data) => {
   }
   const weatherData = {};
   weatherData.city = data.name;
-  weatherData.temperature = data.main.temp;
+  weatherData.temperature = Math.floor(data.main.temp);
   weatherData.adjective = setTemperatureAdjective(weatherData.temperature);
   return weatherData;
 };

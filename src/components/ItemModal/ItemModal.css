@@ -1,0 +1,40 @@
+.preview-card__image {
+  width: 100%;
+  max-height: 500px;
+  object-fit: fill;
+  border-radius: 20px 20px 0px 0px;
+}
+
+.preview-card__content {
+  margin: 0 0 32px 32px;
+}
+
+.preview-card__title {
+  margin: 15px 0 0 0;
+  font-size: 20px;
+}
+
+.preview-card__weather {
+  margin: 12px 0 0;
+}
+
+.preview-card__close-button {
+  position: absolute;
+  background: transparent;
+  background-image: url(../../images/white-close-icon.svg);
+  right: 20px;
+  top: 20px;
+  width: 20px;
+  height: 20px;
+  border: none;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  transition: opacity 0.4s ease;
+  padding: 0;
+  cursor: pointer;
+}
+
+.preview-card__close-button:hover {
+  opacity: 0.6;
+}
