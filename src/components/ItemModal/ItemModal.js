@@ -33,7 +33,7 @@ function ItemModal({ card, closeModal, name }) {
           className="preview-card__close-button"
           type="button"
           onClick={closeModal}
-        ></button>
+        />
       </div>
     </div>
   );

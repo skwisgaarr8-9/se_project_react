@@ -11,7 +11,7 @@ import { apiData, defaultClothingItems } from "../../utils/constants";
 function App() {
   const [weatherData, setWeatherData] = React.useState({});
   const [defaultCards, setDefaultCards] = React.useState([]);
-  const [activeModal, setActiveModal] = React.useState();
+  const [activeModal, setActiveModal] = React.useState(null);
   const [selectedCard, setSelectedCard] = React.useState(null);
 
   const handleAddCardClick = () => {
@@ -19,7 +19,7 @@ function App() {
   };
 
   const closeModal = () => {
-    setActiveModal();
+    setActiveModal(null);
   };
 
   const handleCardClick = (card) => {
