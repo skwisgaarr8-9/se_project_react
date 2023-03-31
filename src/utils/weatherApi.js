@@ -15,8 +15,12 @@ const parseWeatherData = (data) => {
   }
   const weatherData = {};
   weatherData.city = data.name;
-  weatherData.temperature = Math.floor(data.main.temp);
-  weatherData.adjective = setTemperatureAdjective(weatherData.temperature);
+  weatherData.temperature = {};
+  weatherData.temperature.F = `${Math.round(data.main.temp)}°F`;
+  weatherData.temperature.C = `${Math.ceil(((data.main.temp - 32) * 5) / 9)}°C`;
+  weatherData.adjective = setTemperatureAdjective(
+    parseInt(weatherData.temperature.F)
+  );
   return weatherData;
 };
 

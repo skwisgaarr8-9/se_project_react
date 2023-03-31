@@ -9,7 +9,7 @@ function ItemCard({ card, handleCardClick }) {
       }}
     >
       <h2 className="card__title">{card.name}</h2>
-      <img className="card__image" src={card.link} alt={card.name} />
+      <img className="card__image" src={card.imageUrl} alt={card.name} />
     </li>
   );
 }

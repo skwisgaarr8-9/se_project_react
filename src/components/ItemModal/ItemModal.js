@@ -1,7 +1,7 @@
 import React from "react";
 import "./ItemModal.css";
 
-function ItemModal({ card, closeModal, name }) {
+function ItemModal({ card, closeModal, name, openConfirmationModal }) {
   const handleClickOutsideClose = (evt) => {
     if (evt.target.classList.contains("modal")) {
       closeModal();
@@ -24,11 +24,24 @@ function ItemModal({ card, closeModal, name }) {
       onMouseDown={handleClickOutsideClose}
     >
       <div className="modal__container preview-card">
-        <img className="preview-card__image" src={card.link} alt={card.name} />
+        <img
+          className="preview-card__image"
+          src={card.imageUrl}
+          alt={card.name}
+        />
         <div className="preview-card__content">
-          <h2 className="preview-card__title">{card.name}</h2>
-          <p className="preview-card__weather">Weather: {card.weather}</p>
+          <div className="preview-card__info">
+            <h2 className="preview-card__title">{card.name}</h2>
+            <p className="preview-card__weather">Weather: {card.weather}</p>
+          </div>
+          <button
+            className="preview-card__delete-button"
+            onClick={openConfirmationModal}
+          >
+            Delete Item
+          </button>
         </div>
+
         <button
           className="preview-card__close-button"
           type="button"

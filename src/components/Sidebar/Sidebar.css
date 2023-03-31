@@ -1,0 +1,14 @@
+.sidebar {
+  display: flex;
+  max-width: 345px;
+  gap: 16px;
+  align-items: center;
+}
+
+.sidebar__profile-name {
+  margin: 0;
+}
+
+.sidebar__profile-avatar {
+  width: 56px;
+}

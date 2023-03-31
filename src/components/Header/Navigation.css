@@ -29,3 +29,11 @@
 .navigation__profile-name {
   margin: 0;
 }
+
+.navigation__link {
+  text-decoration: none;
+}
+
+.navigation__link:visited {
+  color: #000;
+}
