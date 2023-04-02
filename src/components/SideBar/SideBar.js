@@ -1,7 +1,7 @@
-import "./Sidebar.css";
+import "./SideBar.css";
 import profileAvatar from "../../images/avatar.svg";
 
-function Sidebar() {
+function SideBar() {
   return (
     <div className="sidebar">
       <img
@@ -14,4 +14,4 @@ function Sidebar() {
   );
 }
 
-export default Sidebar;
+export default SideBar;
