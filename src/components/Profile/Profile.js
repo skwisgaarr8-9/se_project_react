@@ -5,7 +5,7 @@ import ClothesSection from "../ClothesSection/ClothesSection";
 function Profile({ cards, weatherData, handleCardClick, handleAddCardClick }) {
   return (
     <div className="profile">
-      <Sidebar />
+      <SideBar />
       <ClothesSection
         cards={cards}
         weatherData={weatherData}
