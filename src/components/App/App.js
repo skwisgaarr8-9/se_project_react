@@ -31,7 +31,6 @@ function App() {
 
   const handleCardClick = (card) => {
     setSelectedCard(card);
-    console.log(card);
     setActiveModal("preview card");
   };
 
@@ -52,7 +51,21 @@ function App() {
       });
   };
 
-  const handleCardDelete = () => {};
+  const handleCardDelete = () => {
+    api
+      .deleteItem({ itemId: selectedCard.id })
+      .then(() => {
+        const updatedClothingCards = clothingCards.filter(
+          (item) => item.id != selectedCard.id
+        );
+        setClothingCards(updatedClothingCards);
+        closeModal();
+        setSelectedCard(null);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   const openConfirmationModal = () => {
     setActiveModal("delete confirmation");
   };
@@ -118,7 +131,10 @@ function App() {
           />
         )}
         {activeModal === "delete confirmation" && (
-          <DeleteConfirmationModal closeModal={closeModal} />
+          <DeleteConfirmationModal
+            closeModal={closeModal}
+            handleCardDelete={handleCardDelete}
+          />
         )}
       </div>
     </CurrentTemperatureWeatherUnitContext.Provider>

@@ -31,10 +31,12 @@ class Api {
   }
 
   deleteItem({ itemId }) {
-    return this._request(`${this._baseUrl}/items${itemId}`, {
+    return this._request(`${this._baseUrl}/items/${itemId}`, {
       method: "DELETE",
     });
   }
 }
 
-export default new Api({ baseUrl: "http://localhost:3001" });
+export default new Api({
+  baseUrl: "https://my-json-server.typicode.com/skwisgaarr8-9/se_project_react",
+});
