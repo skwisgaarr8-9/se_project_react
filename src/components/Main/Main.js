@@ -2,11 +2,11 @@ import React from "react";
 import "./Main.css";
 import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
-import { CurrentTemperatureWeatherUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
 function Main({ weatherData, cards, handleCardClick }) {
   const { currentTemperatureUnit } = React.useContext(
-    CurrentTemperatureWeatherUnitContext
+    CurrentTemperatureUnitContext
   );
 
   return (

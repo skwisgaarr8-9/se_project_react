@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -96,23 +96,21 @@ function App() {
           weatherData={weatherData}
           handleAddCardClick={handleAddCardClick}
         />
-        <Routes>
-          <Route exact path="/">
-            <Main
-              weatherData={weatherData}
-              cards={clothingCards}
-              handleCardClick={handleCardClick}
-            />
-          </Route>
-          <Route path="/profile">
-            <Profile
-              cards={clothingCards}
-              weatherData={weatherData}
-              handleCardClick={handleCardClick}
-              handleAddCardClick={handleAddCardClick}
-            />
-          </Route>
-        </Routes>
+        <Route exact path="/">
+          <Main
+            weatherData={weatherData}
+            cards={clothingCards}
+            handleCardClick={handleCardClick}
+          />
+        </Route>
+        <Route path="/profile">
+          <Profile
+            cards={clothingCards}
+            weatherData={weatherData}
+            handleCardClick={handleCardClick}
+            handleAddCardClick={handleAddCardClick}
+          />
+        </Route>
         <Footer />
         {activeModal === "new card" && (
           <AddItemModal
