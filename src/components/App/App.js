@@ -10,7 +10,7 @@ import Profile from "../Profile/Profile";
 import api from "../../utils/api";
 import { getWeatherData, parseWeatherData } from "../../utils/weatherApi";
 import { apiData } from "../../utils/constants";
-import { CurrentTemperatureWeatherUnitContext } from "../../contexts/CurrentTemperatureContext";
+import { CurrentTemperatureWeatherUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 
 function App() {
