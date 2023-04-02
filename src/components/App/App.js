@@ -1,5 +1,5 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import Header from "../Header/Header";
 import Main from "../Main/Main";
@@ -10,7 +10,7 @@ import Profile from "../Profile/Profile";
 import api from "../../utils/api";
 import { getWeatherData, parseWeatherData } from "../../utils/weatherApi";
 import { apiData } from "../../utils/constants";
-import { CurrentTemperatureWeatherUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
+import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 
 function App() {
@@ -87,12 +87,8 @@ function App() {
       });
   }, []);
 
-  // React.useEffect(() => {
-  //   setClothingCards(defaultClothingItems);
-  // }, []);
-
   return (
-    <CurrentTemperatureWeatherUnitContext.Provider
+    <CurrentTemperatureUnitContext.Provider
       value={{ currentTemperatureUnit, handleToggleSwitchChange }}
     >
       <div className="page__content">
@@ -100,21 +96,23 @@ function App() {
           weatherData={weatherData}
           handleAddCardClick={handleAddCardClick}
         />
-        <Route exact path="/">
-          <Main
-            weatherData={weatherData}
-            cards={clothingCards}
-            handleCardClick={handleCardClick}
-          />
-        </Route>
-        <Route path="/profile">
-          <Profile
-            cards={clothingCards}
-            weatherData={weatherData}
-            handleCardClick={handleCardClick}
-            handleAddCardClick={handleAddCardClick}
-          />
-        </Route>
+        <Routes>
+          <Route exact path="/">
+            <Main
+              weatherData={weatherData}
+              cards={clothingCards}
+              handleCardClick={handleCardClick}
+            />
+          </Route>
+          <Route path="/profile">
+            <Profile
+              cards={clothingCards}
+              weatherData={weatherData}
+              handleCardClick={handleCardClick}
+              handleAddCardClick={handleAddCardClick}
+            />
+          </Route>
+        </Routes>
         <Footer />
         {activeModal === "new card" && (
           <AddItemModal
@@ -137,7 +135,7 @@ function App() {
           />
         )}
       </div>
-    </CurrentTemperatureWeatherUnitContext.Provider>
+    </CurrentTemperatureUnitContext.Provider>
   );
 }
 
