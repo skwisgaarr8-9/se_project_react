@@ -1,5 +1,5 @@
 import "./Profile.css";
-import Sidebar from "../Sidebar/Sidebar";
+import SideBar from "../Sidebar/Sidebar";
 import ClothesSection from "../ClothesSection/ClothesSection";
 
 function Profile({ cards, weatherData, handleCardClick, handleAddCardClick }) {
