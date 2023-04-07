@@ -45,6 +45,7 @@ function App() {
       .addItem({ name, imageUrl, weather })
       .then((data) => {
         setClothingCards([data, ...clothingCards]);
+        closeModal();
       })
       .catch((err) => {
         console.log(err);
@@ -56,7 +57,7 @@ function App() {
       .deleteItem({ itemId: selectedCard.id })
       .then(() => {
         const updatedClothingCards = clothingCards.filter(
-          (item) => item.id != selectedCard.id
+          (item) => item.id !== selectedCard.id
         );
         setClothingCards(updatedClothingCards);
         closeModal();

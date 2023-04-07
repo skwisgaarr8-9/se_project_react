@@ -10,7 +10,6 @@ function AddItemModal({ onAddItem, isOpen, closeModal }) {
   const handleSubmit = (evt) => {
     evt.preventDefault();
     onAddItem({ name, imageUrl, weather });
-    closeModal();
   };
 
   const onNameInputChange = (evt) => {
@@ -31,7 +30,7 @@ function AddItemModal({ onAddItem, isOpen, closeModal }) {
       setUrl("");
       setWeather("");
     }
-  });
+  }, [isOpen]);
 
   return (
     <ModalWithForm
@@ -48,6 +47,7 @@ function AddItemModal({ onAddItem, isOpen, closeModal }) {
         className="form__input"
         id="name"
         type="text"
+        value={name}
         required
         placeholder="Name"
         autoComplete="off"
@@ -60,6 +60,7 @@ function AddItemModal({ onAddItem, isOpen, closeModal }) {
         className="form__input"
         id="image"
         type="url"
+        value={imageUrl}
         placeholder="Image URL"
         required
         autoComplete="off"
