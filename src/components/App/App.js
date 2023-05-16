@@ -7,7 +7,8 @@ import Footer from "../Footer/Footer";
 import AddItemModal from "../AddItemModal/AddItemModal";
 import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
-import api from "../../utils/api";
+import RegisterModal from "../RegisterModal/RegisterModal";
+import { api } from "../../utils/api";
 import { getWeatherData, parseWeatherData } from "../../utils/weatherApi";
 import { apiData } from "../../utils/constants";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
@@ -16,7 +17,7 @@ import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmati
 function App() {
   const [weatherData, setWeatherData] = React.useState({});
   const [clothingCards, setClothingCards] = React.useState([]);
-  const [activeModal, setActiveModal] = React.useState(null);
+  const [activeModal, setActiveModal] = React.useState("register");
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentTemperatureUnit, setCurrentTemperatureUnit] =
     React.useState("F");
@@ -113,6 +114,9 @@ function App() {
           />
         </Route>
         <Footer />
+        {activeModal === "register" && (
+          <RegisterModal closeModal={closeModal} />
+        )}
         {activeModal === "new card" && (
           <AddItemModal
             onAddItem={handleAddItemSubmit}

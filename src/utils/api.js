@@ -37,6 +37,6 @@ class Api {
   }
 }
 
-export default new Api({
-  baseUrl: "https://my-json-server.typicode.com/skwisgaarr8-9/se_project_react",
+export const api = new Api({
+  baseUrl: "http://localhost:3001",
 });
