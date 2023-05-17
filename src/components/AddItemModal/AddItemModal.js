@@ -33,7 +33,7 @@ function AddItemModal({ onAddItem, isOpen, closeModal }) {
     <ModalWithForm
       name="new-card"
       title={"New garment"}
-      buttonText={"Add Garment"}
+      submitButtonText={"Add Garment"}
       closeModal={closeModal}
       handleSubmit={handleSubmit}
     >

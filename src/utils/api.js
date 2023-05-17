@@ -38,5 +38,5 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: "http://localhost:3001",
+  baseUrl: "https://my-json-server.typicode.com/skwisgaarr8-9/se_project_react",
 });

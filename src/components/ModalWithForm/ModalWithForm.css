@@ -31,6 +31,11 @@
   margin: 0;
 }
 
+.modal__button-container {
+  display: flex;
+  gap: 12px;
+}
+
 .modal__button {
   font-size: 16px;
   color: #fff;
@@ -73,6 +78,20 @@
   opacity: 0.6;
 }
 
+.modal__redirect-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.4s ease;
+  padding: 0;
+  width: fit-content;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.modal__redirect-button:hover {
+  opacity: 0.6;
+}
+
 .form__label {
   margin: 24px 0 0;
 }
@@ -83,9 +102,13 @@
   padding: 8px 0 4px;
 }
 
-.form__input:nth-of-type(2) {
-  margin-bottom: 24px;
+.form__input:last-of-type {
+  margin-bottom: 28px;
 }
+
+/* .form__input:nth-of-type(2) {
+  margin-bottom: 24px;
+} */
 
 .form__legend {
   margin-bottom: 12px;

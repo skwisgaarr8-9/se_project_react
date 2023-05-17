@@ -4,10 +4,13 @@ import "./ModalWithForm.css";
 function ModalWithForm({
   title,
   name,
-  buttonText,
+  submitButtonText,
   children,
   closeModal,
   handleSubmit,
+  registerOrLoginModal,
+  redirectButtonText,
+  handleRedirectButtonClick,
 }) {
   React.useEffect(() => {
     const handleEscClose = (evt) => {
@@ -34,9 +37,20 @@ function ModalWithForm({
         <form className="modal__form form" name={name} onSubmit={handleSubmit}>
           <h2 className="modal__title">{title}</h2>
           {children}
-          <button className="modal__button" type="submit">
-            {buttonText}
-          </button>
+          <div className="modal__button-container">
+            <button className="modal__button" type="submit">
+              {submitButtonText}
+            </button>
+            {registerOrLoginModal && (
+              <button
+                className="modal__redirect-button"
+                type="button"
+                onClick={handleRedirectButtonClick}
+              >
+                {redirectButtonText}
+              </button>
+            )}
+          </div>
         </form>
         <button
           className="modal__close-button"

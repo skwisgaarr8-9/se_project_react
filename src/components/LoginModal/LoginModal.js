@@ -1,23 +1,20 @@
 import React from "react";
-import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
 
-function RegisterModal({
+function LoginModal({
   closeModal,
   isOpen,
   handleRedirectButtonClick,
-  handleUserRegistrationSubmit,
+  handleUserLoginSubmit,
 }) {
   const [values, setValues] = React.useState({
     email: "",
     password: "",
-    name: "",
-    avatar: "",
   });
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    handleUserRegistrationSubmit(values);
+    handleUserLoginSubmit(values);
   };
 
   const handleChange = (evt) => {
@@ -30,30 +27,28 @@ function RegisterModal({
       setValues({
         email: "",
         password: "",
-        name: "",
-        avatar: "",
       });
     }
   }, [isOpen]);
 
   return (
     <ModalWithForm
-      name="register"
-      title={"Sign up"}
-      submitButtonText={"Next"}
+      name="login"
+      title={"Log in"}
+      submitButtonText={"Log in"}
       closeModal={closeModal}
       handleSubmit={handleSubmit}
       registerOrLoginModal={true}
-      redirectButtonText={"or Log in"}
+      redirectButtonText={"or Register"}
       handleRedirectButtonClick={handleRedirectButtonClick}
     >
       <label className="form__label" htmlFor="email">
-        Email*
+        Email
       </label>
       <input
         className="form__input"
-        id="email"
         type="email"
+        id="email"
         name="email"
         value={values.email}
         required
@@ -62,42 +57,16 @@ function RegisterModal({
         onChange={handleChange}
       />
       <label className="form__label" htmlFor="password">
-        Password*
+        Password
       </label>
       <input
         className="form__input"
-        id="password"
         type="password"
+        id="password"
         name="password"
+        placeholder="Password"
         value={values.password}
         required
-        placeholder="Password"
-        autoComplete="off"
-        onChange={handleChange}
-      />
-      <label className="form__label" htmlFor="name">
-        Name
-      </label>
-      <input
-        className="form__input"
-        id="name"
-        type="text"
-        name="name"
-        value={values.name}
-        placeholder="Name"
-        autoComplete="off"
-        onChange={handleChange}
-      />
-      <label className="form__label" htmlFor="avatar">
-        Avatar URL
-      </label>
-      <input
-        className="form__input"
-        id="avatar"
-        type="url"
-        name="avatar"
-        value={values.avatar}
-        placeholder="Avatar URL"
         autoComplete="off"
         onChange={handleChange}
       />
@@ -105,4 +74,4 @@ function RegisterModal({
   );
 }
 
-export default RegisterModal;
+export default LoginModal;
