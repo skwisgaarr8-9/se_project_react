@@ -1,7 +1,16 @@
 import React from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import "./ItemModal.css";
 
 function ItemModal({ card, closeModal, name, openConfirmationModal }) {
+  const currentUser = React.useContext(CurrentUserContext);
+  const isOwn = card.owner === currentUser._id;
+  const itemDeleteButtonClassName = `preview-card__delete-button ${
+    isOwn
+      ? "preview-card__delete-button_visible"
+      : "preview-card__delete-button_hidden"
+  }`;
+
   const handleClickOutsideClose = (evt) => {
     if (evt.target.classList.contains("modal")) {
       closeModal();
@@ -35,7 +44,7 @@ function ItemModal({ card, closeModal, name, openConfirmationModal }) {
             <p className="preview-card__weather">Weather: {card.weather}</p>
           </div>
           <button
-            className="preview-card__delete-button"
+            className={itemDeleteButtonClassName}
             onClick={openConfirmationModal}
           >
             Delete Item

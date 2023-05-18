@@ -1,6 +1,12 @@
 .sidebar {
   display: flex;
+  flex-direction: column;
   max-width: 345px;
+  gap: 24px;
+}
+
+.sidebar__profile-content {
+  display: flex;
   gap: 16px;
   align-items: center;
 }
@@ -11,4 +17,27 @@
 
 .sidebar__profile-avatar {
   width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.5);
+}
+
+.sidebar__profile-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar__profile-button {
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: opacity 0.4s ease;
+  padding: 0;
+  width: fit-content;
+  font-weight: 700;
+}
+
+.sidebar__profile-button:hover {
+  opacity: 0.6;
 }

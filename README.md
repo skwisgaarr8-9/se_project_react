@@ -2,7 +2,7 @@
 
 ## About the project
 
-This project is the eleventh project in Practicum's Software Engineering course. It is the second iteration of a project that will span several sprints. Here I add API calls to a mock server to allow the adding and deleting of clothing cards to the page. When the page is first rendered, an API call is made to get the clothing cards from the database based on the temperature. Routes have also been added, one for the main page and one for the profile page. When clicking on the profile name or profile avatar, the `<Profile>` component is rendered. Lastly, a `<ToggleSwitch>` component was added to allow users to switch between Celsius and Fahrenheit that when clicked will update the state of the current temperature unit. The temperature value will then update anywhere on the page where it is used.
+This project is the fourteenth project in Practicum's Software Engineering course. It is the third iteration of a project that will span several sprints. In this project, I connect the backend portion I spent the previous two projects working on to this front end project. This project also has some added functionality in that now users are able to register and log in. When doing so, API requests are sent to the backend server. Users are now able to edit their profile data, add cards, delete cards, and like cards. When a user logs in, a JSON web token is created and stored in local storage so that if the user returns without logging out, the user will not have to log in again.
 
 ## Technologies and Techniques
 
@@ -24,7 +24,10 @@ I will continue to update this project over the coming sprints. Functionality to
 <img src="./src/images/demos/demo04.png">
 <img src="./src/images/demos/demo05.png">
 <img src="./src/images/demos/demo06.png">
+<img src="./src/images/demos/demo07.png">
+<img src="./src/images/demos/demo08.png">
 
 ## Links
 
+- [Backend Repo](https://github.com/skwisgaarr8-9/se_project_express)
 - [Figma Design](https://www.figma.com/file/DTojSwldenF9UPKQZd6RRb/Sprint-10%3A-WTWR)

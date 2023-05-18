@@ -33,6 +33,7 @@ class Auth {
       body: JSON.stringify({ email, password }),
     });
   }
+
 }
 
 export const auth = new Auth({ baseUrl: "http://localhost:3001" });

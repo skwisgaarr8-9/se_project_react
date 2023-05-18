@@ -7,6 +7,15 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+}
+
+.card__header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  position: absolute;
+  top: 16px;
 }
 
 .card__title {
@@ -15,9 +24,30 @@
   font-size: 16px;
   color: rgba(0, 0, 0, 0.6);
   padding: 2px 12px;
-  top: 39px;
   margin: 0;
-  position: relative;
+}
+
+.card__like-button {
+  background-repeat: no-repeat;
+  border: none;
+  background-color: transparent;
+  width: 20px;
+  height: 20px;
+  transition: opacity 0.4s ease;
+  cursor: pointer;
+  padding: 0;
+}
+
+.card__like-button:hover {
+  opacity: 0.6;
+}
+
+.card__like-button_inactive {
+  background-image: url(../../images/default-like-button.svg);
+}
+
+.card__like-button_active {
+  background-image: url(../../images/liked-like-button.svg);
 }
 
 .card__image {

@@ -10,6 +10,8 @@ import ItemModal from "../ItemModal/ItemModal";
 import Profile from "../Profile/Profile";
 import RegisterModal from "../RegisterModal/RegisterModal";
 import LoginModal from "../LoginModal/LoginModal";
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import EditProfileModal from "../EditProfileModal/EditProfileModal";
 import { auth } from "../../utils/auth";
 import { api } from "../../utils/api";
 import { getWeatherData, parseWeatherData } from "../../utils/weatherApi";
@@ -28,31 +30,79 @@ function App() {
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
 
-  const handleUserRegistrationSubmit = (inputValues) => {
+  const token = localStorage.getItem("jwt");
+
+  const handleUserRegistration = (inputValues) => {
     auth
       .register(inputValues)
-      .then((data) => {
-        setCurrentUser(data.data);
-        console.log(isLoggedIn);
-        setIsLoggedIn(true);
-        console.log(isLoggedIn);
-        closeModal();
+      .then(() => {
+        // want to use handleUserLogin() here but if i do, the token variable in useEffect does not update automatically
+        // maybe something with asynchronous code but not sure how to optimize
+        auth.login(inputValues).then((data) => {
+          if (data.token) {
+            localStorage.setItem("jwt", data.token);
+            closeModal();
+          }
+        });
       })
       .catch((err) => {
         console.log(err);
       });
   };
 
-  const handleUserLoginSubmit = (inputValues) => {
+  const handleUserLogin = (inputValues) => {
     auth
       .login(inputValues)
       .then((data) => {
-        console.log(data);
-        closeModal();
+        if (data.token) {
+          localStorage.setItem("jwt", data.token);
+          closeModal();
+        }
       })
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const handleCardLike = ({ id, isLiked }) => {
+    !isLiked
+      ? api
+          .addCardLike({ itemId: id }, token)
+          .then((data) => {
+            setClothingCards((clothingCards) =>
+              clothingCards.map((card) => (card._id === id ? data.data : card))
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      : api
+          .removeCardLike({ itemId: id }, token)
+          .then((data) => {
+            setClothingCards((clothingCards) =>
+              clothingCards.map((card) => (card._id === id ? data.data : card))
+            );
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+  };
+
+  const handleEditProfileSubmit = (inputValues) => {
+    api.updateUserProfile(inputValues, token).then((data) => {
+      setCurrentUser(data.data);
+      closeModal();
+    });
+  };
+
+  const handleEditProfileButtonClick = () => {
+    setActiveModal("edit profile");
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("jwt");
+    setCurrentUser({});
+    setIsLoggedIn(false);
   };
 
   const handleSignupButtonClick = () => {
@@ -90,11 +140,11 @@ function App() {
       : setCurrentTemperatureUnit("F");
   };
 
-  const handleAddItemSubmit = ({ name, imageUrl, weather }) => {
+  const handleAddItemSubmit = (inputValues) => {
     api
-      .addItem({ name, imageUrl, weather })
+      .addItem(inputValues, token)
       .then((data) => {
-        setClothingCards([data, ...clothingCards]);
+        setClothingCards([data.data, ...clothingCards]);
         closeModal();
       })
       .catch((err) => {
@@ -104,12 +154,12 @@ function App() {
 
   const handleCardDelete = () => {
     api
-      .deleteItem({ itemId: selectedCard.id })
+      .deleteItem({ itemId: selectedCard._id }, token)
       .then(() => {
         const updatedClothingCards = clothingCards.filter(
-          (item) => item.id !== selectedCard.id
+          (item) => item._id !== selectedCard._id
         );
-        setClothingCards(updatedClothingCards);
+        setClothingCards([...updatedClothingCards]);
         closeModal();
         setSelectedCard(null);
       })
@@ -140,6 +190,15 @@ function App() {
       });
   }, []);
 
+  React.useEffect(() => {
+    if (token) {
+      api.getUser(token).then((data) => {
+        setCurrentUser(data.data);
+        setIsLoggedIn(true);
+      });
+    }
+  }, [token]);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <CurrentTemperatureUnitContext.Provider
@@ -155,23 +214,29 @@ function App() {
           />
           <Route exact path="/">
             <Main
+              currentUser={currentUser}
               weatherData={weatherData}
               cards={clothingCards}
-              handleCardClick={handleCardClick}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
             />
           </Route>
-          <Route path="/profile">
+          <ProtectedRoute isLoggedIn={isLoggedIn} path="/profile">
             <Profile
+              handleLogOut={handleLogOut}
+              handleEditProfileButtonClick={handleEditProfileButtonClick}
+              currentUser={currentUser}
               cards={clothingCards}
               weatherData={weatherData}
-              handleCardClick={handleCardClick}
+              onCardClick={handleCardClick}
               handleAddCardClick={handleAddCardClick}
+              onCardLike={handleCardLike}
             />
-          </Route>
+          </ProtectedRoute>
           <Footer />
           {activeModal === "register" && (
             <RegisterModal
-              handleUserRegistrationSubmit={handleUserRegistrationSubmit}
+              handleUserRegistration={handleUserRegistration}
               closeModal={closeModal}
               isOpen={true}
               handleRedirectButtonClick={handleRedirectButtonClick}
@@ -179,7 +244,7 @@ function App() {
           )}
           {activeModal === "login" && (
             <LoginModal
-              handleUserLoginSubmit={handleUserLoginSubmit}
+              handleUserLogin={handleUserLogin}
               closeModal={closeModal}
               isOpen={true}
               handleRedirectButtonClick={handleRedirectButtonClick}
@@ -204,6 +269,13 @@ function App() {
             <DeleteConfirmationModal
               closeModal={closeModal}
               handleCardDelete={handleCardDelete}
+            />
+          )}
+          {activeModal === "edit profile" && (
+            <EditProfileModal
+              closeModal={closeModal}
+              currentUser={currentUser}
+              handleEditProfileSubmit={handleEditProfileSubmit}
             />
           )}
         </div>

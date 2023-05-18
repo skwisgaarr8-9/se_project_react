@@ -5,7 +5,7 @@ function LoginModal({
   closeModal,
   isOpen,
   handleRedirectButtonClick,
-  handleUserLoginSubmit,
+  handleUserLogin,
 }) {
   const [values, setValues] = React.useState({
     email: "",
@@ -14,7 +14,7 @@ function LoginModal({
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    handleUserLoginSubmit(values);
+    handleUserLogin(values);
   };
 
   const handleChange = (evt) => {

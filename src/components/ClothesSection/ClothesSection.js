@@ -2,10 +2,12 @@ import "./ClothesSection.css";
 import ItemCard from "../ItemCard/ItemCard";
 
 function ClothesSection({
+  onCardLike,
   cards,
   weatherData,
-  handleCardClick,
+  onCardClick,
   handleAddCardClick,
+  currentUser,
 }) {
   return (
     <div className="clothes-section">
@@ -20,12 +22,18 @@ function ClothesSection({
       </div>
       <ul className="clothes-section__cards">
         {cards
-          .filter((card) => card.weather === weatherData.adjective)
+          .filter(
+            (card) =>
+              card.weather === weatherData.adjective &&
+              card.owner === currentUser._id
+          )
           .map((filteredCard) => (
             <ItemCard
-              key={filteredCard.id}
+              currentUser={currentUser}
+              onCardLike={onCardLike}
+              key={filteredCard._id}
               card={filteredCard}
-              handleCardClick={handleCardClick}
+              onCardClick={onCardClick}
             />
           ))}
       </ul>

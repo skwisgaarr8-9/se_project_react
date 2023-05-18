@@ -6,7 +6,7 @@ function RegisterModal({
   closeModal,
   isOpen,
   handleRedirectButtonClick,
-  handleUserRegistrationSubmit,
+  handleUserRegistration,
 }) {
   const [values, setValues] = React.useState({
     email: "",
@@ -17,7 +17,7 @@ function RegisterModal({
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    handleUserRegistrationSubmit(values);
+    handleUserRegistration(values);
   };
 
   const handleChange = (evt) => {

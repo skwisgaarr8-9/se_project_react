@@ -4,7 +4,7 @@ import WeatherCard from "../WeatherCard/WeatherCard";
 import ItemCard from "../ItemCard/ItemCard";
 import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperatureUnitContext";
 
-function Main({ weatherData, cards, handleCardClick }) {
+function Main({ weatherData, cards, onCardClick, onCardLike, currentUser }) {
   const { currentTemperatureUnit } = React.useContext(
     CurrentTemperatureUnitContext
   );
@@ -21,9 +21,11 @@ function Main({ weatherData, cards, handleCardClick }) {
           .filter((card) => card.weather === weatherData.adjective)
           .map((filteredCard) => (
             <ItemCard
-              key={filteredCard.id}
+              currentUser={currentUser}
+              onCardLike={onCardLike}
+              key={filteredCard._id}
               card={filteredCard}
-              handleCardClick={handleCardClick}
+              onCardClick={onCardClick}
             />
           ))}
       </ul>

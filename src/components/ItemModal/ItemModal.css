@@ -34,6 +34,10 @@
   opacity: 0.6;
 }
 
+.preview-card__delete-button_hidden {
+  visibility: hidden;
+}
+
 .preview-card__close-button {
   position: absolute;
   background: transparent;

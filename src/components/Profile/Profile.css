@@ -2,5 +2,6 @@
   display: flex;
   margin-top: 19px;
   align-items: flex-start;
-  justify-content: space-between;
+  gap: 116px;
+  /* justify-content: space-between; */
 }
