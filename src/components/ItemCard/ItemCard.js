@@ -11,13 +11,11 @@ function ItemCard({ card, onCardClick, onCardLike, currentUser }) {
   };
 
   const handleCardClick = (evt) => {
-    if (!evt.target.classList.contains("card__like-button")) {
-      onCardClick(card);
-    }
+    onCardClick(card);
   };
 
   return (
-    <li className="card" onClick={handleCardClick}>
+    <li className="card">
       <div className="card__header">
         <h2 className="card__title">{card.name}</h2>
         <button
@@ -26,7 +24,12 @@ function ItemCard({ card, onCardClick, onCardLike, currentUser }) {
           onClick={handleLikeClick}
         ></button>
       </div>
-      <img className="card__image" src={card.imageUrl} alt={card.name} />
+      <img
+        className="card__image"
+        src={card.imageUrl}
+        alt={card.name}
+        onClick={handleCardClick}
+      />
     </li>
   );
 }

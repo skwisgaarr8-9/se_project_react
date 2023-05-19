@@ -1,4 +1,5 @@
 import React from "react";
+import { useEscape } from "../../hooks/useEscape";
 import "./ModalWithForm.css";
 
 function ModalWithForm({
@@ -12,15 +13,8 @@ function ModalWithForm({
   redirectButtonText,
   handleRedirectButtonClick,
 }) {
-  React.useEffect(() => {
-    const handleEscClose = (evt) => {
-      if (evt.key === "Escape") {
-        closeModal();
-      }
-    };
-    window.addEventListener("keydown", handleEscClose);
-    return () => window.removeEventListener("keydown", handleEscClose);
-  }, [closeModal]);
+  useEscape(closeModal);
+
 
   const handleClickOutsideClose = (evt) => {
     if (evt.target.classList.contains("modal")) {

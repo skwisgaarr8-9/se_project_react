@@ -1,18 +1,14 @@
 import React from "react";
 import "./AddItemModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { useForm } from "../../hooks/useForm";
 
-function AddItemModal({ onAddItem, isOpen, closeModal }) {
-  const [values, setValues] = React.useState({
+function AddItemModal({ onAddItem, isOpen, closeModal, isLoading }) {
+  const { values, handleChange, setValues } = useForm({
     name: "",
     imageUrl: "",
     weather: "",
   });
-
-  const handleChange = (evt) => {
-    const { name, value } = evt.target;
-    setValues({ ...values, [name]: value });
-  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -27,13 +23,13 @@ function AddItemModal({ onAddItem, isOpen, closeModal }) {
         weather: "",
       });
     }
-  }, [isOpen]);
+  }, [isOpen, setValues]);
 
   return (
     <ModalWithForm
       name="new-card"
       title={"New garment"}
-      submitButtonText={"Add Garment"}
+      submitButtonText={isLoading ? "Saving..." : "Add Garment"}
       closeModal={closeModal}
       handleSubmit={handleSubmit}
     >

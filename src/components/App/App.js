@@ -21,6 +21,7 @@ import { CurrentTemperatureUnitContext } from "../../contexts/CurrentTemperature
 import DeleteConfirmationModal from "../DeleteConfirmationModal/DeleteConfirmationModal";
 
 function App() {
+  //states
   const [weatherData, setWeatherData] = React.useState({});
   const [clothingCards, setClothingCards] = React.useState([]);
   const [activeModal, setActiveModal] = React.useState(null);
@@ -29,28 +30,38 @@ function App() {
     React.useState("F");
   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const token = localStorage.getItem("jwt");
 
+  //modal functions
+  const closeModal = () => {
+    setActiveModal(null);
+  };
+
+  const openConfirmationModal = () => {
+    setActiveModal("delete confirmation");
+  };
+
+  //server request handlers
+
   const handleUserRegistration = (inputValues) => {
+    setIsLoading(true);
     auth
       .register(inputValues)
       .then(() => {
-        // want to use handleUserLogin() here but if i do, the token variable in useEffect does not update automatically
-        // maybe something with asynchronous code but not sure how to optimize
-        auth.login(inputValues).then((data) => {
-          if (data.token) {
-            localStorage.setItem("jwt", data.token);
-            closeModal();
-          }
-        });
+        handleUserLogin(inputValues);
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
   const handleUserLogin = (inputValues) => {
+    setIsLoading(true);
     auth
       .login(inputValues)
       .then((data) => {
@@ -61,6 +72,9 @@ function App() {
       })
       .catch((err) => {
         console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   };
 
@@ -89,11 +103,58 @@ function App() {
   };
 
   const handleEditProfileSubmit = (inputValues) => {
-    api.updateUserProfile(inputValues, token).then((data) => {
-      setCurrentUser(data.data);
-      closeModal();
-    });
+    setIsLoading(true);
+    api
+      .updateUserProfile(inputValues, token)
+      .then((data) => {
+        setCurrentUser(data.data);
+        closeModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
+
+  const handleAddItemSubmit = (inputValues) => {
+    setIsLoading(true);
+    api
+      .addItem(inputValues, token)
+      .then((data) => {
+        setClothingCards([data.data, ...clothingCards]);
+        closeModal();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  const handleCardDelete = () => {
+    setIsLoading(true);
+    api
+      .deleteItem({ itemId: selectedCard._id }, token)
+      .then(() => {
+        const updatedClothingCards = clothingCards.filter(
+          (item) => item._id !== selectedCard._id
+        );
+        setClothingCards([...updatedClothingCards]);
+        closeModal();
+        setSelectedCard(null);
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
+
+  //button handlers
 
   const handleEditProfileButtonClick = () => {
     setActiveModal("edit profile");
@@ -125,10 +186,6 @@ function App() {
     setActiveModal("new card");
   };
 
-  const closeModal = () => {
-    setActiveModal(null);
-  };
-
   const handleCardClick = (card) => {
     setSelectedCard(card);
     setActiveModal("preview card");
@@ -140,37 +197,7 @@ function App() {
       : setCurrentTemperatureUnit("F");
   };
 
-  const handleAddItemSubmit = (inputValues) => {
-    api
-      .addItem(inputValues, token)
-      .then((data) => {
-        setClothingCards([data.data, ...clothingCards]);
-        closeModal();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleCardDelete = () => {
-    api
-      .deleteItem({ itemId: selectedCard._id }, token)
-      .then(() => {
-        const updatedClothingCards = clothingCards.filter(
-          (item) => item._id !== selectedCard._id
-        );
-        setClothingCards([...updatedClothingCards]);
-        closeModal();
-        setSelectedCard(null);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const openConfirmationModal = () => {
-    setActiveModal("delete confirmation");
-  };
+  //side effects
 
   React.useEffect(() => {
     getWeatherData(apiData)
@@ -192,10 +219,15 @@ function App() {
 
   React.useEffect(() => {
     if (token) {
-      api.getUser(token).then((data) => {
-        setCurrentUser(data.data);
-        setIsLoggedIn(true);
-      });
+      api
+        .getUser(token)
+        .then((data) => {
+          setCurrentUser(data.data);
+          setIsLoggedIn(true);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [token]);
 
@@ -240,6 +272,7 @@ function App() {
               closeModal={closeModal}
               isOpen={true}
               handleRedirectButtonClick={handleRedirectButtonClick}
+              isLoading={isLoading}
             />
           )}
           {activeModal === "login" && (
@@ -248,6 +281,7 @@ function App() {
               closeModal={closeModal}
               isOpen={true}
               handleRedirectButtonClick={handleRedirectButtonClick}
+              isLoading={isLoading}
             />
           )}
           {activeModal === "new card" && (
@@ -255,6 +289,7 @@ function App() {
               isOpen={true}
               onAddItem={handleAddItemSubmit}
               closeModal={closeModal}
+              isLoading={isLoading}
             />
           )}
           {activeModal === "preview card" && (
@@ -267,6 +302,7 @@ function App() {
           )}
           {activeModal === "delete confirmation" && (
             <DeleteConfirmationModal
+              isLoading={isLoading}
               closeModal={closeModal}
               handleCardDelete={handleCardDelete}
             />
@@ -276,6 +312,7 @@ function App() {
               closeModal={closeModal}
               currentUser={currentUser}
               handleEditProfileSubmit={handleEditProfileSubmit}
+              isLoading={isLoading}
             />
           )}
         </div>

@@ -1,13 +1,15 @@
 import React from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { useForm } from "../../hooks/useForm";
 
 function LoginModal({
   closeModal,
   isOpen,
   handleRedirectButtonClick,
   handleUserLogin,
+  isLoading,
 }) {
-  const [values, setValues] = React.useState({
+  const { values, handleChange, setValues } = useForm({
     email: "",
     password: "",
   });
@@ -17,11 +19,6 @@ function LoginModal({
     handleUserLogin(values);
   };
 
-  const handleChange = (evt) => {
-    const { name, value } = evt.target;
-    setValues({ ...values, [name]: value });
-  };
-
   React.useEffect(() => {
     if (isOpen) {
       setValues({
@@ -29,13 +26,13 @@ function LoginModal({
         password: "",
       });
     }
-  }, [isOpen]);
+  }, [isOpen, setValues]);
 
   return (
     <ModalWithForm
       name="login"
       title={"Log in"}
-      submitButtonText={"Log in"}
+      submitButtonText={isLoading ? "Logging in..." : "Log in"}
       closeModal={closeModal}
       handleSubmit={handleSubmit}
       registerOrLoginModal={true}

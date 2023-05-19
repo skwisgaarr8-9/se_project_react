@@ -1,20 +1,17 @@
 import React from "react";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { useForm } from "../../hooks/useForm";
 
 function EditProfileModal({
   closeModal,
   currentUser,
   handleEditProfileSubmit,
+  isLoading,
 }) {
-  const [values, setValues] = React.useState({
+  const { values, handleChange } = useForm({
     name: currentUser.name,
     avatar: currentUser.avatar,
   });
-
-  const handleChange = (evt) => {
-    const { name, value } = evt.target;
-    setValues({ ...values, [name]: value });
-  };
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -24,7 +21,7 @@ function EditProfileModal({
   return (
     <ModalWithForm
       closeModal={closeModal}
-      submitButtonText={"Save changes"}
+      submitButtonText={isLoading ? "Saving..." : "Save changes"}
       name="edit-profile"
       title={"Change profile data"}
       handleSubmit={handleSubmit}

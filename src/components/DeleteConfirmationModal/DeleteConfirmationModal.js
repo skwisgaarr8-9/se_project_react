@@ -1,22 +1,15 @@
 import React from "react";
+import { useEscape } from "../../hooks/useEscape";
 import "./DeleteConfirmationModal.css";
 
-function DeleteConfirmationModal({ closeModal, handleCardDelete }) {
+function DeleteConfirmationModal({ closeModal, handleCardDelete, isLoading }) {
   const handleClickOutsideClose = (evt) => {
     if (evt.target.classList.contains("modal")) {
       closeModal();
     }
   };
 
-  React.useEffect(() => {
-    const handleEscClose = (evt) => {
-      if (evt.key === "Escape") {
-        closeModal();
-      }
-    };
-    window.addEventListener("keydown", handleEscClose);
-    return () => window.removeEventListener("keydown", handleEscClose);
-  }, [closeModal]);
+  useEscape(closeModal);
 
   return (
     <div className="modal" onMouseDown={handleClickOutsideClose}>
@@ -32,7 +25,7 @@ function DeleteConfirmationModal({ closeModal, handleCardDelete }) {
           type="button"
           onClick={handleCardDelete}
         >
-          Yes, delete item
+          {isLoading ? "Deleting..." : "Yes, delete item"}
         </button>
         <button
           className="delete-confirm-modal__button delete-confirm-modal__button_type_cancel"
@@ -45,7 +38,7 @@ function DeleteConfirmationModal({ closeModal, handleCardDelete }) {
           className="modal__close-button"
           type="button"
           onClick={closeModal}
-        ></button>
+        />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import React from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useEscape } from "../../hooks/useEscape";
 import "./ItemModal.css";
 
 function ItemModal({ card, closeModal, name, openConfirmationModal }) {
@@ -17,15 +18,7 @@ function ItemModal({ card, closeModal, name, openConfirmationModal }) {
     }
   };
 
-  React.useEffect(() => {
-    const handleEscClose = (evt) => {
-      if (evt.key === "Escape") {
-        closeModal();
-      }
-    };
-    window.addEventListener("keydown", handleEscClose);
-    return () => window.removeEventListener("keydown", handleEscClose);
-  }, [closeModal]);
+  useEscape(closeModal);
 
   return (
     <div

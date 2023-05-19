@@ -1,14 +1,16 @@
 import React from "react";
 import "./RegisterModal.css";
 import ModalWithForm from "../ModalWithForm/ModalWithForm";
+import { useForm } from "../../hooks/useForm";
 
 function RegisterModal({
   closeModal,
   isOpen,
   handleRedirectButtonClick,
   handleUserRegistration,
+  isLoading,
 }) {
-  const [values, setValues] = React.useState({
+  const { values, handleChange, setValues } = useForm({
     email: "",
     password: "",
     name: "",
@@ -20,11 +22,6 @@ function RegisterModal({
     handleUserRegistration(values);
   };
 
-  const handleChange = (evt) => {
-    const { name, value } = evt.target;
-    setValues({ ...values, [name]: value });
-  };
-
   React.useEffect(() => {
     if (isOpen) {
       setValues({
@@ -34,13 +31,13 @@ function RegisterModal({
         avatar: "",
       });
     }
-  }, [isOpen]);
+  }, [isOpen, setValues]);
 
   return (
     <ModalWithForm
       name="register"
       title={"Sign up"}
-      submitButtonText={"Next"}
+      submitButtonText={isLoading ? "Registering..." : "Next"}
       closeModal={closeModal}
       handleSubmit={handleSubmit}
       registerOrLoginModal={true}
