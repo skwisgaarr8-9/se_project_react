@@ -1,3 +1,8 @@
+const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://api.wtwr.jumpingcrab.com'
+    : 'http://localhost:3001';
+
 class Auth {
   constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
@@ -16,9 +21,9 @@ class Auth {
 
   register({ name, avatar, email, password }) {
     return this._request(`${this._baseUrl}/signup`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ name, avatar, email, password }),
     });
@@ -26,14 +31,13 @@ class Auth {
 
   login({ email, password }) {
     return this._request(`${this._baseUrl}/signin`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email, password }),
     });
   }
-
 }
 
-export const auth = new Auth({ baseUrl: "http://localhost:3001" });
+export const auth = new Auth({ baseUrl });
