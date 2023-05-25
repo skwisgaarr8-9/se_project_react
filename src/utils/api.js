@@ -1,3 +1,8 @@
+const baseUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://api.wtwr.jumpingcrab.com'
+    : 'http://localhost:3001';
+
 class Api {
   constructor({ baseUrl }) {
     this._baseUrl = baseUrl;
@@ -20,9 +25,9 @@ class Api {
 
   getUser(token) {
     return this._request(`${this._baseUrl}/users/me`, {
-      method: "GET",
+      method: 'GET',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         authorization: `Bearer ${token}`,
       },
     });
@@ -30,9 +35,9 @@ class Api {
 
   addItem({ name, imageUrl, weather }, token) {
     return this._request(`${this._baseUrl}/items`, {
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
@@ -45,7 +50,7 @@ class Api {
 
   deleteItem({ itemId }, token) {
     return this._request(`${this._baseUrl}/items/${itemId}`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -54,9 +59,9 @@ class Api {
 
   updateUserProfile({ name, avatar }, token) {
     return this._request(`${this._baseUrl}/users/me`, {
-      method: "PATCH",
+      method: 'PATCH',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
         authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ name, avatar }),
@@ -65,7 +70,7 @@ class Api {
 
   addCardLike({ itemId }, token) {
     return this._request(`${this._baseUrl}/items/${itemId}/likes`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -74,7 +79,7 @@ class Api {
 
   removeCardLike({ itemId }, token) {
     return this._request(`${this._baseUrl}/items/${itemId}/likes`, {
-      method: "DELETE",
+      method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,
       },
@@ -82,6 +87,4 @@ class Api {
   }
 }
 
-export const api = new Api({
-  baseUrl: "http://localhost:3001",
-});
+export const api = new Api({ baseUrl });
